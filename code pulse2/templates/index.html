@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoPulse | Smart Campus AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="#" class="brand">
+      <span class="brand-icon">✳</span>
+      <span>Eco<span class="gradient-text">Pulse</span><small>SMART CAMPUS AI</small></span>
+    </a>
+
+    <div class="side-label">WORKSPACE</div>
+    <button class="nav-item active" data-target="overview">◈ <span>Overview</span></button>
+    <button class="nav-item" data-target="monitoring">◉ <span>Live Monitoring</span></button>
+    <button class="nav-item" data-target="resources">↗ <span>Resource Analytics</span></button>
+    <button class="nav-item" data-target="maintenance">⚙ <span>Maintenance Hub</span><b id="ticketBadge">2</b></button>
+    <button class="nav-item" data-target="digital-twin">⬡ <span>Campus Twin</span></button>
+    <button class="nav-item" data-target="predictions">⌁ <span>AI Predictions</span></button>
+
+    <div class="side-label">IMPACT</div>
+    <button class="nav-item" data-target="leaderboard">♧ <span>Green Leaderboard</span></button>
+    <button class="nav-item" data-target="reports">▤ <span>Reports & Insights</span></button>
+
+    <div class="sidebar-bottom">
+      <div class="mini-status"><span class="pulse-dot"></span> Demo environment online</div>
+      <div class="profile">
+        <div class="avatar">SC</div>
+        <div><strong>Campus Admin</strong><small>Administrator</small></div>
+        <button id="settingsBtn" class="icon-button" aria-label="Settings">⚙</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn" class="icon-button menu-btn" aria-label="Toggle menu">☰</button>
+      <div class="breadcrumb">Workspace <span>/</span> <strong id="pageName">Overview</strong></div>
+      <div class="top-actions">
+        <span class="live-label"><span class="pulse-dot"></span> DEMO LIVE</span>
+        <button id="notificationsBtn" class="icon-button notification-btn" aria-label="Notifications">♧<i></i></button>
+        <button class="primary-button" id="quickAction">＋ Quick action</button>
+      </div>
+    </header>
+
+    <section class="page-section" id="overview">
+      <div class="welcome-row">
+        <div>
+          <div class="eyebrow"><span>✦</span> INTELLIGENT SUSTAINABILITY PLATFORM</div>
+          <h1>Campus command <span class="gradient-text">center.</span></h1>
+          <p class="muted">Your campus, connected. Your impact, measurable.</p>
+        </div>
+        <div class="date-chip">◷ <span id="clock">Loading time...</span></div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-content">
+          <span class="hero-tag">✦ THIS MONTH'S MISSION</span>
+          <h2>Build a greener<br>tomorrow, <span>today.</span></h2>
+          <p>Turn campus data into smarter decisions. Detect waste, predict problems, and track your environmental impact in one place.</p>
+          <button class="hero-button" data-open="missionModal">Explore campus impact ↗</button>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="planet">🌎</div>
+          <span class="float-chip chip-a">⚡ Energy smart</span>
+          <span class="float-chip chip-b">♧ Greener campus</span>
+          <span class="float-chip chip-c">💧 Water watch</span>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div><h2>Campus at a glance</h2><p>Illustrative values for the interactive demo</p></div>
+        <button class="text-button" data-target="resources">View analytics ↗</button>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card purple">
+          <div class="stat-top"><span>Energy consumption</span><span class="stat-icon">⚡</span></div>
+          <div class="stat-value"><span id="energyValue">1,284</span><small> kWh</small></div>
+          <div class="stat-bottom"><span class="trend good">↓ 12.8%</span><span>vs. previous period</span></div>
+          <div class="sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="stat-card cyan">
+          <div class="stat-top"><span>Water usage</span><span class="stat-icon">💧</span></div>
+          <div class="stat-value"><span id="waterValue">8,420</span><small> L</small></div>
+          <div class="stat-bottom"><span class="trend good">↓ 8.4%</span><span>vs. previous period</span></div>
+          <div class="sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="stat-card green">
+          <div class="stat-top"><span>Carbon footprint</span><span class="stat-icon">♧</span></div>
+          <div class="stat-value"><span id="carbonValue">246</span><small> kg CO₂</small></div>
+          <div class="stat-bottom"><span class="trend good">↓ 6.2%</span><span>estimated emissions</span></div>
+          <div class="sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="stat-card orange">
+          <div class="stat-top"><span>Open issues</span><span class="stat-icon">⚠</span></div>
+          <div class="stat-value"><span id="issueValue">02</span><small> issues</small></div>
+          <div class="stat-bottom"><span class="trend warning">Needs attention</span><span>demo ticket queue</span></div>
+          <div class="sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+      </div>
+
+      <div class="content-grid">
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><h3>Resource performance</h3><p>Illustrative daily consumption</p></div><select id="chartPeriod"><option value="7">Last 7 days</option><option value="12">Last 12 days</option></select></div>
+          <div class="chart-wrap"><canvas id="resourceChart"></canvas></div>
+          <div class="chart-legend"><span><i class="legend-dot purple-dot"></i> Energy (kWh)</span><span><i class="legend-dot cyan-dot"></i> Water (hundreds of L)</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Campus green score</h3><p>Illustrative sustainability index</p></div><span class="pill green-pill">+4.6%</span></div>
+          <div class="score-circle"><div><strong id="greenScore">82</strong><small>/100</small></div></div>
+          <div class="score-caption">Great progress! <span>✦</span></div>
+          <p class="muted center">There is still room to improve energy efficiency and reduce waste.</p>
+          <button class="secondary-button full-width" data-target="leaderboard">View department scores ↗</button>
+        </article>
+      </div>
+
+      <div class="content-grid lower-grid">
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Priority alerts</h3><p>Review and create a maintenance ticket</p></div><span class="pill red-pill" id="alertCount">2 ACTIVE</span></div>
+          <div id="alertList" class="alert-list">
+            <div class="alert-item"><span class="alert-symbol red">!</span><div><strong>Water leakage suspected</strong><p>Engineering Block · Sensor demo</p><small>High priority · Simulated alert</small></div><button class="small-button" data-ticket="Water leakage suspected">Create ticket</button></div>
+            <div class="alert-item"><span class="alert-symbol yellow">⚡</span><div><strong>Energy usage anomaly</strong><p>Library · Monitoring demo</p><small>Medium priority · Simulated alert</small></div><button class="small-button" data-ticket="Energy usage anomaly">Create ticket</button></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><h3>AI insight of the day</h3><p>Example recommendation</p></div><span class="ai-tag">✦ AI INSIGHT</span></div>
+          <div class="insight-art">✦</div>
+          <h4>Small changes. Measurable impact.</h4>
+          <p class="muted">Review after-hours energy use and investigate rooms where lighting and cooling remain on while occupancy is low.</p>
+          <button class="text-button" data-target="predictions">Explore predictions ↗</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section" id="monitoring" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CONNECTED CAMPUS</div><h1>Live monitoring<span class="gradient-text">.</span></h1><p class="muted">Camera preview and sensor status</p></div><span class="pill yellow-pill">DEMO DATA</span></div>
+      <div class="content-grid">
+        <article class="panel camera-panel">
+          <div class="panel-heading"><div><h3>Camera feed</h3><p id="cameraStatus">No camera connected</p></div><span class="pill red-pill" id="cameraBadge">OFFLINE</span></div>
+          <div class="camera-screen" id="cameraScreen"><div class="camera-cross">⌖</div><div class="camera-message"><span class="camera-emoji">◉</span><h3>Camera feed unavailable</h3><p>Connect a real camera to display live video. Demo mode does not invent a camera stream.</p><button class="primary-button" id="connectCamera">Connect camera</button></div><div class="camera-overlay">CAM-01 · LOCAL PREVIEW</div></div>
+          <div class="camera-footer"><span>Privacy-first monitoring</span><button class="text-button" id="demoCamera">Run visual demo ↗</button></div>
+          <video id="cameraVideo" autoplay playsinline muted hidden></video>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Sensor network</h3><p>Example sensor readings</p></div><span class="pill green-pill">SIMULATED</span></div>
+          <div class="sensor-row"><span class="sensor-icon">💧</span><div><strong>Water flow</strong><small>Engineering Block</small></div><spacer></spacer><b id="flowReading">12.4 L/min</b></div>
+          <div class="sensor-row"><span class="sensor-icon">⚡</span><div><strong>Power meter</strong><small>Main building</small></div><spacer></spacer><b id="powerReading">18.6 kW</b></div>
+          <div class="sensor-row"><span class="sensor-icon">🌡</span><div><strong>Temperature</strong><small>Library</small></div><spacer></spacer><b id="tempReading">24.8 °C</b></div>
+          <div class="sensor-row"><span class="sensor-icon">♧</span><div><strong>Occupancy</strong><small>Study hall</small></div><spacer></spacer><b id="occupancyReading">42 people</b></div>
+          <button class="secondary-button full-width" id="refreshSensors">↻ Refresh demo readings</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section" id="resources" hidden>
+      <div class="section-heading"><div><div class="eyebrow">MEASURE WHAT MATTERS</div><h1>Resource analytics<span class="gradient-text">.</span></h1><p class="muted">Consumption, estimated costs and environmental impact</p></div></div>
+      <div class="stats-grid">
+        <article class="stat-card purple"><div class="stat-top"><span>Energy</span><span>⚡</span></div><div class="stat-value">1,284 <small>kWh</small></div><p class="muted">Illustrative reading</p></article>
+        <article class="stat-card cyan"><div class="stat-top"><span>Water</span><span>💧</span></div><div class="stat-value">8,420 <small>L</small></div><p class="muted">Illustrative reading</p></article>
+        <article class="stat-card green"><div class="stat-top"><span>Estimated cost</span><span>₹</span></div><div class="stat-value" id="costValue">₹10,272</div><p class="muted">Editable demo assumption</p></article>
+        <article class="stat-card orange"><div class="stat-top"><span>CO₂ emissions</span><span>♧</span></div><div class="stat-value">246 <small>kg</small></div><p class="muted">Illustrative estimate</p></article>
+      </div>
+      <article class="panel">
+        <div class="panel-heading"><div><h3>What-if savings simulator</h3><p>Adjust assumptions to estimate possible savings</p></div><span class="ai-tag">INTERACTIVE</span></div>
+        <div class="simulator">
+          <label for="energyReduction">Reduce energy use <strong id="reductionLabel">15%</strong></label>
+          <input id="energyReduction" type="range" min="0" max="50" value="15">
+          <label for="unitRate">Electricity rate (₹ per kWh)</label>
+          <input id="unitRate" type="number" min="0" max="1000" value="8">
+          <div class="simulation-results"><div><small>Estimated energy saved</small><strong id="savedEnergy">192.6 kWh</strong></div><div><small>Estimated cost saved</small><strong id="savedMoney">₹1,541</strong></div><div><small>New energy estimate</small><strong id="newEnergy">1,091.4 kWh</strong></div></div>
+          <p class="muted">Estimates use the illustrative 1,284 kWh baseline. Replace it with measured data before making operational decisions.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="page-section" id="maintenance" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CLOSED-LOOP ACTION</div><h1>Maintenance hub<span class="gradient-text">.</span></h1><p class="muted">Turn an alert into a tracked task and verified resolution</p></div><button class="primary-button" id="newTicketBtn">＋ New ticket</button></div>
+      <div class="stats-grid">
+        <article class="stat-card orange"><div class="stat-top"><span>Open tickets</span><span>⚠</span></div><div class="stat-value" id="openTickets">2</div></article>
+        <article class="stat-card cyan"><div class="stat-top"><span>In progress</span><span>↻</span></div><div class="stat-value" id="progressTickets">0</div></article>
+        <article class="stat-card green"><div class="stat-top"><span>Resolved</span><span>✓</span></div><div class="stat-value" id="resolvedTickets">0</div></article>
+      </div>
+      <article class="panel"><div class="panel-heading"><div><h3>Maintenance tickets</h3><p>Demo tickets are saved in this browser session</p></div></div><div id="ticketList" class="ticket-list"></div></article>
+    </section>
+
+    <section class="page-section" id="digital-twin" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CAMPUS DIGITAL TWIN</div><h1>Explore your campus<span class="gradient-text">.</span></h1><p class="muted">Interactive conceptual floor plan — not a live building model</p></div></div>
+      <article class="panel"><div class="building-grid">
+        <button class="building-room room-green" data-room="Library"><span>▤</span><strong>Library</strong><small>Energy: Normal</small></button>
+        <button class="building-room room-red" data-room="Engineering Block"><span>⚠</span><strong>Engineering Block</strong><small>Water: Check needed</small></button>
+        <button class="building-room room-purple" data-room="Science Lab"><span>⌬</span><strong>Science Lab</strong><small>Energy: Elevated</small></button>
+        <button class="building-room room-cyan" data-room="Study Hall"><span>♧</span><strong>Study Hall</strong><small>Occupancy: Normal</small></button>
+        <button class="building-room room-orange" data-room="Cafeteria"><span>◇</span><strong>Cafeteria</strong><small>Waste: Monitor</small></button>
+        <button class="building-room room-green" data-room="Administration"><span>⌂</span><strong>Administration</strong><small>Status: Normal</small></button>
+      </div><p class="muted">Select a room to view a sample issue and create a ticket. Connect actual building data to make this a real digital twin.</p></article>
+    </section>
+
+    <section class="page-section" id="predictions" hidden>
+      <div class="section-heading"><div><div class="eyebrow">PREDICT · PREVENT · IMPROVE</div><h1>AI predictions<span class="gradient-text">.</span></h1><p class="muted">Transparent demo rules, not a trained forecasting model</p></div><span class="ai-tag">✦ SMART INSIGHTS</span></div>
+      <div class="content-grid">
+        <article class="panel"><div class="panel-heading"><div><h3>Potential risk indicators</h3><p>Example rules for demonstrating predictive maintenance</p></div></div><div class="prediction-item"><span class="alert-symbol red">!</span><div><strong>Possible water leak</strong><p>Investigate sustained flow outside expected hours.</p><span class="pill red-pill">Rule-based example</span></div></div><div class="prediction-item"><span class="alert-symbol yellow">⚡</span><div><strong>After-hours energy waste</strong><p>Compare energy use with occupancy and building schedules.</p><span class="pill yellow-pill">Rule-based example</span></div></div><div class="prediction-item"><span class="alert-symbol cyan">⌁</span><div><strong>Consumption forecast</strong><p>Use historical meter readings to train a future forecasting model.</p><span class="pill cyan-pill">Needs real data</span></div></div></article>
+        <article class="panel"><div class="panel-heading"><div><h3>Test a scenario</h3><p>Run an illustrative decision simulation</p></div></div><label for="scenario">Scenario</label><select id="scenario"><option value="rooms">Switch off unused rooms after 6 PM</option><option value="leak">Investigate a suspected leak</option><option value="lighting">Upgrade lighting efficiency</option></select><button class="primary-button full-width" id="runScenario">Run simulation ✦</button><div id="scenarioResult" class="scenario-result">Choose a scenario and run the simulation to see an illustrative recommendation.</div></article>
+      </div>
+    </section>
+
+    <section class="page-section" id="leaderboard" hidden>
+      <div class="section-heading"><div><div class="eyebrow">EVERY ACTION COUNTS</div><h1>Green leaderboard<span class="gradient-text">.</span></h1><p class="muted">Sample scores — not actual department rankings</p></div></div>
+      <article class="panel leaderboard">
+        <div class="leader-row"><span class="rank">01</span><span class="leader-icon">📚</span><div><strong>Library</strong><small>Efficiency and conservation</small></div><div class="leader-progress"><div style="width:92%"></div></div><strong>92</strong></div>
+        <div class="leader-row"><span class="rank">02</span><span class="leader-icon">🔬</span><div><strong>Science Lab</strong><small>Resource management</small></div><div class="leader-progress"><div style="width:86%"></div></div><strong>86</strong></div>
+        <div class="leader-row"><span class="rank">03</span><span class="leader-icon">🏫</span><div><strong>Engineering Block</strong><small>Water efficiency</small></div><div class="leader-progress"><div style="width:78%"></div></div><strong>78</strong></div>
+        <div class="leader-row"><span class="rank">04</span><span class="leader-icon">🍃</span><div><strong>Cafeteria</strong><small>Waste reduction</small></div><div class="leader-progress"><div style="width:72%"></div></div><strong>72</strong></div>
+      </article>
+    </section>
+
+    <section class="page-section" id="reports" hidden>
+      <div class="section-heading"><div><div class="eyebrow">EVIDENCE-BASED IMPACT</div><h1>Reports & insights<span class="gradient-text">.</span></h1><p class="muted">Export a demo summary and recommendations</p></div></div>
+      <article class="panel"><div class="panel-heading"><div><h3>Sustainability summary</h3><p>Generated from the dashboard's illustrative data</p></div><button class="primary-button" id="downloadReport">↓ Download report</button></div><div id="reportPreview" class="report-preview"><h3>EcoPulse Campus Impact Report</h3><p>Period: demo snapshot</p><p>Energy baseline: 1,284 kWh</p><p>Water baseline: 8,420 L</p><p>Estimated emissions: 246 kg CO₂</p><p>Priority: investigate sample alerts and compare actual readings against baseline.</p></div></article>
+    </section>
+
+    <footer>EcoPulse <span>·</span> Smart Campus Sustainability <span>·</span> Interactive prototype using illustrative data</footer>
+  </main>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close popup">×</button>
+      <div class="modal-icon">✦</div>
+      <h2 id="modalTitle">Quick action</h2>
+      <p id="modalDescription">Choose an action to continue.</p>
+      <div id="modalBody"></div>
+      <div class="modal-actions"><button class="secondary-button" id="cancelModal">Cancel</button><button class="primary-button" id="confirmModal">Continue ↗</button></div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
+
